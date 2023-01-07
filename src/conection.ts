@@ -10,6 +10,5 @@ export const Conection = new DataSource({
     "database": process.env.DATABASE,
     "synchronize": true,
     "logging": false,
-    "entities": ["src/entities/**/*.ts"],
-    "migrations": ["src/migrations/**/*.ts"]
+    "entities": ["src/entities/**/*.ts"]
 });

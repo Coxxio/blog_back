@@ -1,5 +1,5 @@
 import { ExtractJwt, Strategy as JWTStrategy } from "passport-jwt";
-import { User } from "../entities/UserEntity";
+import { UserEntity } from "../entities/UserEntity";
 import "dotenv";
 
 export default new JWTStrategy({
@@ -9,7 +9,7 @@ export default new JWTStrategy({
 }, 
 async (payload, done) => {
     try {
-        const user = await User.findOneBy({id: payload.id})
+        const user = await UserEntity.findOneBy({id: payload.id})
         if (user){
             return done(null, user)
         }else {

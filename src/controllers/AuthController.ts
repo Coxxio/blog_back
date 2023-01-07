@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as jsonwebtoken from "jsonwebtoken";
 import { compareSync } from "bcrypt";
-import { User } from "../entities/UserEntity";
+import { UserEntity } from "../entities/UserEntity";
 import { use } from "passport";
 
 class AuthController {
@@ -18,7 +18,7 @@ class AuthController {
 
   public async login(req: express.Request, res: express.Response) {
     const loginData = req.body;
-    const user = await User.findOneBy({
+    const user = await UserEntity.findOneBy({
       email: loginData.email,
     });
     try {

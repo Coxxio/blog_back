@@ -6,14 +6,16 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { IUser } from "../models/IUser";
 import { ROLES } from "../utils/ROLES.enum";
+import { PostEntity } from "./PostEntity";
 
 @Entity("User")
-export class User extends BaseEntity implements IUser {
+export class UserEntity extends BaseEntity implements IUser {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -38,6 +40,10 @@ export class User extends BaseEntity implements IUser {
     onUpdate: "CURRENT_TIMESTAMP(6)",
   })
   updatedAt: Date;
+
+  // Relations
+  @OneToMany(() => PostEntity, (post) => post.author)
+  post: PostEntity[];
 
   @BeforeInsert()
   @BeforeUpdate()
