@@ -14,7 +14,6 @@ export class PostController {
     const category = category_find.find(
       (category) => req.query.category === category
     );
-    console.log(req.query);
 
     if (req.query !== undefined) {
       pagination.limit = Number(req.query.limit);
@@ -47,23 +46,6 @@ export class PostController {
       return res.send(posts);
     }
   }
-
-  // public async tucupita(req: express.Request, res: express.Response) {
-  //   const respo = Conection.getRepository(PostEntity);
-
-  //   // const query: PaginateQuery = {
-  //   //   page: Number(req.query.page),
-  //   //   limit: Number(req.query.limit),
-  //   //   path: "Pimga"
-  //   // };
-
-  //   console.log(query)
-
-  //   return paginate(query, respo, {
-  //     sortableColumns: ["id"],
-  //     defaultSortBy: [["id", "DESC"]],
-  //   });
-  // }
 
   public async getOnePost(req: express.Request, res: express.Response) {
     const post = await PostEntity.findOneBy({ id: req.params.id });
@@ -115,6 +97,7 @@ export class PostController {
       userIsAdmin.role != ROLES.ADMIN ||
       userIsAdmin.id != post.author.id
     ) {
+      console.log(req.user)
       return res.status(401).send("Unauthorized");
     }
     await PostEntity.delete(req.params.id)
