@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as passport from "passport";
 import { UserController } from "../controllers/UserController";
-import { ROLES } from "../utils/ROLES.enum";
+import { ROLES } from "../utils/enums/ROLES.enum";
 import { checkIsInRole } from "../utils/utils";
 import { validateInput } from "./validate.routes";
 

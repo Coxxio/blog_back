@@ -1,13 +1,69 @@
 import * as express from "express";
 import { PostEntity } from "../entities/PostEntity";
 import { UserEntity } from "../entities/UserEntity";
-import { ROLES } from "../utils/ROLES.enum";
+import { CATEGORY } from "../utils/enums/CATEGORY.enum";
+import { ROLES } from "../utils/enums/ROLES.enum";
 
 export class PostController {
   public async getAllPost(req: express.Request, res: express.Response) {
-    const posts = await PostEntity.find();
-    return res.send(posts);
+    const category_find = Object.values(CATEGORY);
+    const pagination = {
+      limit: 0,
+      page: null,
+    };
+    const category = category_find.find(
+      (category) => req.query.category === category
+    );
+    console.log(req.query);
+
+    if (req.query !== undefined) {
+      pagination.limit = Number(req.query.limit);
+      pagination.page = (Number(req.query.page) - 1) * 5;
+    }
+
+    if (category !== undefined) {
+      const total = await PostEntity.createQueryBuilder()
+        .where("category = :category", { category: category })
+        .getCount();
+      const posts = await PostEntity.createQueryBuilder()
+        .where("category = :category", { category: category })
+        .limit(pagination.limit)
+        .offset(pagination.page)
+        .orderBy("pub_date", "DESC")
+        .getMany();
+      const response = { posts, total };
+      return res.send(response);
+    } else if (pagination.page !== null) {
+      const total = await PostEntity.createQueryBuilder().getCount();
+      const posts = await PostEntity.createQueryBuilder()
+        .limit(pagination.limit)
+        .offset(pagination.page)
+        .orderBy("pub_date", "DESC")
+        .getMany();
+      const response = { posts, total };
+      return res.send(response);
+    } else {
+      const posts = await PostEntity.find({ order: { pub_date: "DESC" } });
+      return res.send(posts);
+    }
   }
+
+  // public async tucupita(req: express.Request, res: express.Response) {
+  //   const respo = Conection.getRepository(PostEntity);
+
+  //   // const query: PaginateQuery = {
+  //   //   page: Number(req.query.page),
+  //   //   limit: Number(req.query.limit),
+  //   //   path: "Pimga"
+  //   // };
+
+  //   console.log(query)
+
+  //   return paginate(query, respo, {
+  //     sortableColumns: ["id"],
+  //     defaultSortBy: [["id", "DESC"]],
+  //   });
+  // }
 
   public async getOnePost(req: express.Request, res: express.Response) {
     const post = await PostEntity.findOneBy({ id: req.params.id });
@@ -24,6 +80,7 @@ export class PostController {
     newPost.title = postDada.title;
     newPost.resume = postDada.resume;
     newPost.content = postDada.content;
+    newPost.category = postDada.category;
     newPost.author = user.id;
     await newPost.save();
     return res.status(200).send("Post created successfully");

@@ -21,7 +21,9 @@ const validateInput = (
     }
   }
   if (req.method === "GET" && params.id){
-    if (!uuid.validate(params.id)){
+    if(params.id.startsWith('?')){
+      next();
+    }else if (!uuid.validate(params.id)){
       return res.status(400).send({ message: "Id must be a valid uuid" });
     }
   }

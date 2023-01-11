@@ -11,7 +11,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { IUser } from "../models/IUser";
-import { ROLES } from "../utils/ROLES.enum";
+import { ROLES } from "../utils/enums/ROLES.enum";
 import { PostEntity } from "./PostEntity";
 
 @Entity("User")

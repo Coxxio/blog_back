@@ -1,4 +1,4 @@
-import { ROLES } from "./ROLES.enum";
+import { ROLES } from "./enums/ROLES.enum";
 
 const checkIsInRole =
   (...ROLES) =>

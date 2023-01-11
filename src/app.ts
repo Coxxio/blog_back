@@ -1,8 +1,10 @@
 import * as express from "express";
+import * as cors from "cors";
 import { Conection } from "./conection";
 import "reflect-metadata";
 import passport = require("passport");
-import JWTStrategy from "./middleware/passport-jwt"
+import JWTStrategy from "./middleware/passport-jwt";
+import { pagination } from "typeorm-pagination";
 
 class App {
   public app: express.Application;
@@ -14,6 +16,7 @@ class App {
     this.port = port;
     this.initializeModels();
     this.initializeMiddlewares();
+    this.initializeCors();
     this.initializeControllers(controllers);
   }
 
@@ -28,6 +31,7 @@ class App {
   // Here we can add all the global middlewares for our application. (Those that will work across every contoller)
   private initializeMiddlewares() {
     this.app.use(express.json());
+    this.app.use(pagination);
     passport.use(JWTStrategy);
   }
 
@@ -35,6 +39,14 @@ class App {
     controllers.forEach((controller) => {
       this.app.use("/", controller.router);
     });
+  }
+
+  private initializeCors() {
+    this.app.use(
+      cors({
+        origin: "http://localhost:3000",
+      })
+    );
   }
 
   // Boots the application

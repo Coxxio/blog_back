@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { IPost } from "../models/IPost";
+import { CATEGORY } from "../utils/enums/CATEGORY.enum";
 import { UserEntity } from "./UserEntity";
 
 @Entity("post")
@@ -23,6 +24,9 @@ export class PostEntity extends BaseEntity implements IPost {
 
   @Column({ type: "text" })
   content: string;
+
+  @Column({ type: "text", nullable: true })
+  category: CATEGORY;
 
   @CreateDateColumn({
     type: "timestamp",

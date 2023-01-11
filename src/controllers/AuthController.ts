@@ -31,7 +31,7 @@ class AuthController {
           );
           // );
           res.status(200);
-          return res.json({"jwt": jwt});
+          return res.json({"jwt": jwt, user});
       } else {
         res.status(401);
         return res.json({"msg": "Wrong Credentials"});

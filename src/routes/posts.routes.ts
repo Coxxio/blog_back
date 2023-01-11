@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as passport from "passport";
 import { PostController } from "../controllers/PostContoller";
-import { ROLES } from "../utils/ROLES.enum";
+import { ROLES } from "../utils/enums/ROLES.enum";
 import { checkIsInRole } from "../utils/utils";
 import { validateInput } from "./validate.routes";
 
@@ -17,13 +17,11 @@ export class PostRoutes {
 
     this.router.get(
       this.path,
-      passport.authenticate("jwt", { session: false }),
       this.PostController.getAllPost
     );
     
     this.router.get(
       this.path + "/:id",
-      passport.authenticate("jwt", { session: false }),
       this.PostController.getOnePost
     );
 

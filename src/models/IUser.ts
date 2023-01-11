@@ -1,5 +1,5 @@
 import { PostEntity } from "../entities/PostEntity";
-import { ROLES } from "../utils/ROLES.enum";
+import { ROLES } from "../utils/enums/ROLES.enum";
 
 export interface IUser {
     email: string;
