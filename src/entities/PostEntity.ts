@@ -4,11 +4,13 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { IPost } from "../models/IPost";
 import { CATEGORY } from "../utils/enums/CATEGORY.enum";
+import { PostClickedEntity } from "./PostClickedEntity";
 import { UserEntity } from "./UserEntity";
 
 @Entity("post")
@@ -41,6 +43,8 @@ export class PostEntity extends BaseEntity implements IPost {
   })
   updatedAt: Date;
 
+  // Relations
   @ManyToOne(() => UserEntity, (author) => author.post, { eager: true })
   author: UserEntity;
+
 }
