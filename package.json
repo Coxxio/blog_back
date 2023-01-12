@@ -18,6 +18,7 @@
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.11",
+    "typeorm-seeding": "^1.6.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -35,7 +36,9 @@
     "start": "ts-node ./src/server.ts",
     "start:watch": "nodemon",
     "build": "tsc",
-    "dev": "ts-node-dev --respawn ./src/server.ts"
+    "dev": "ts-node-dev --respawn ./src/server.ts",
+    "seed:config": "ts-node .node_modules/typeorm-seeding/dist/cli.js config",
+    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
   },
   "nodemonConfig": {
     "ignore": [

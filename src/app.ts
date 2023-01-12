@@ -4,7 +4,6 @@ import { Conection } from "./conection";
 import "reflect-metadata";
 import passport = require("passport");
 import JWTStrategy from "./middleware/passport-jwt";
-import { pagination } from "typeorm-pagination";
 
 class App {
   public app: express.Application;
@@ -31,7 +30,6 @@ class App {
   // Here we can add all the global middlewares for our application. (Those that will work across every contoller)
   private initializeMiddlewares() {
     this.app.use(express.json());
-    this.app.use(pagination);
     passport.use(JWTStrategy);
   }
 
