@@ -21,8 +21,9 @@ export class PostClickedController {
 
   public async getHoursPost(req: express.Request, res: express.Response) {
     const categories = await PostClickedEntity.createQueryBuilder("metrics")
-      .groupBy("date_trunc('hour',metrics.date), metrics.date")
-      .select("COUNT(date), metrics.date")
+      .select("DATE_TRUNC('hour',metrics.date), COUNT(*)")
+      .groupBy("1")
+      .orderBy("DATE_TRUNC('hour',metrics.date)")
       .getRawMany();
     return res.status(200).send(categories);
   }

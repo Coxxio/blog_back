@@ -22,7 +22,7 @@ export class PostClickedEntity extends BaseEntity implements IPostClicked {
   post_category: CATEGORY;
 
   @CreateDateColumn({
-    type: "timestamp",
+    type: "time",
     default: () => "CURRENT_TIMESTAMP(0)",
   })
   date: Date;
