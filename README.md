@@ -1,5 +1,5 @@
-# blog_wingsoft_back
-Prueba FullStack para Wingsoft
+# blog_back
+Prueba FullStack
 
 
 ## Installation
